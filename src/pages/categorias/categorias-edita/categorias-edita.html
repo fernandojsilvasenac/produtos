@@ -11,7 +11,7 @@
       <ion-input type="text" formControlName="name"></ion-input>
     </ion-item>
     <ion-item color="danger" *ngIf="!form.controls.name.valid && (form.controls.name.dirty || form.controls.name.touched)">
-      <div [hidden]="!form.controls.name.erros.required">
+      <div [hidden]="!form.controls.name.errors.required">
         O Campo é obrigatório
       </div>
     </ion-item>
