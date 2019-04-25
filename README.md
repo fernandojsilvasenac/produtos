@@ -2,6 +2,7 @@
 Pra rodar vc precisará de um arquivo firebase-config.ts na raiz do projeto contendo suas configurações do firebase:
 
 export const config = {
+
     apiKey: "",
  
     authDomain: "",
