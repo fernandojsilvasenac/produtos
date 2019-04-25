@@ -1,15 +1,59 @@
-<!--
-  Generated template for the ProdutosEditaPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-  <ion-navbar>
-    <ion-title>produtos-edita</ion-title>
+  <ion-navbar color="primary">
+    <ion-title>{{title}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+
+    <form [formGroup]="formProdutos">
+        <ion-item>
+            <ion-label stacked>Nome</ion-label>
+            <ion-input type="text" formControlName="name"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="!formProdutos.controls.name.valid && (formProdutos.controls.name.dirty || formProdutos.controls.name.touched)"
+            color="danger">
+            <div [hidden]="!formProdutos.controls.name.errors.required">
+              O campo é obrigatório
+            </div>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Categorias</ion-label>
+            <ion-select formControlName="categoryKey" (ionChange)="getCategorias()" interface="popover">
+              <ion-option value="" [selected]="true">Selecione</ion-option>
+              <ion-option *ngFor="let category of categorias | async" [value]="category.key">{{ category.name }}</ion-option>
+            </ion-select>
+        </ion-item>
+
+
+      <ion-item>
+        <ion-label class="form-control-label">Preço</ion-label>
+        <ion-input type="number" step="1" min="0.1" class="form-control" formControlName="price"></ion-input>
+      </ion-item>
+
+    <ion-item>
+        <ion-label stacked>Descriçao</ion-label>
+        <ion-input type="text" formControlName="description"></ion-input>
+    </ion-item>
+
+    <ion-item [hidden]="hasImg">
+      <ion-label class="form-control-label">Foto</ion-label>
+      <ion-input type="file" class="form-control" accept="image/png,image/jpeg" (change)="fileEvent($event)" formControlName="img"></ion-input>
+      <ion-item *ngIf="formProdutos.controls.img.invalid && (formProdutos.controls.img.dirty || formProdutos.controls.img.touched)" class="text-danger">
+        <div *ngIf="formProdutos.controls.img.errors.imgType">
+          Os formatos permitidos de imagem são: png e jpeg
+        </div>
+      </ion-item>
+    </ion-item>
+    <ion-item class="form-group" [hidden]="!hasImg">
+      <img src="{{ formProdutos.controls.imgUrl.value }}" class="img-thumbnail d-block" style="max-width: 100px;" [hidden]="!hasImg" />
+      <button class="btn btn-secondary mt-2" type="button" (click)="removeImg()"><i class="fa fa-times" aria-hidden="true"></i> Remover imagem</button>
+    </ion-item>
+    <div padding>
+        <button ion-button block type="submit" [disabled]="!formProdutos.valid" (click)="onSubmit()">Salvar</button>
+    </div>
+
+    </form>
 
 </ion-content>

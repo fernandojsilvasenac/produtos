@@ -5,19 +5,25 @@
 </ion-header>
 
 <ion-content padding>
+
   <ion-list>
-    <ion-item-sliding>
-      <ion-item>
-        <h3>Primeiro Produto</h3>
-        <ion-buttons end>
-          <button ion-button color="secondary"><ion-icon name="create"></ion-icon>Editar</button>
-          <button ion-button color="danger"><ion-icon name="trash"></ion-icon>Excluir</button>
-        </ion-buttons>
-        </ion-item>
-    </ion-item-sliding>
+    <ion-item *ngFor="let item of produtos | async">
+        <h2> {{item.data.name}} </h2>
+        <ion-avatar item-start>
+            <img src="https://firebasestorage.googleapis.com/v0/b/pedidos-ionic.appspot.com/o/img%2F-LbjygLU-1UF11zBpOsW?alt=media&token=86f51d89-36da-452d-ac8c-aec4c2645da9" class="img-thumbnail" style="max-width: 100px;" >
+            <!-- <img src="{{ item.data.imgUrl }}" class="img-thumbnail" style="max-width: 100px;" [hidden]="item.data.imgUrl==''"> -->
+        </ion-avatar>
+        <ion-avatar item-end>
+              <button ion-fab mini color="secondary" (click)="editItemProdutos(item)"><ion-icon name="create"></ion-icon></button>
+              <button ion-fab mini color="danger" (click)="removeItemProdutos(item.key, item.data.imgUrl !='')"><ion-icon name="trash"></ion-icon></button>
+        </ion-avatar>
+        <p text-right>{{ item.data.price | currency:'BRL':true }}</p>
+        <p>{{ item.data.categoryName }}</p>
+
+    </ion-item>
   </ion-list>
 
-  <ion-fab right bottom>
-      <button ion-fab><ion-icon name="add"></ion-icon></button>
+  <ion-fab right bottom> <!-- newItemProdutos é um método na classe produtos-lista.ts -->
+      <button ion-fab (click)="newItemProdutos()"> <ion-icon name="add"></ion-icon> </button>
   </ion-fab>
 </ion-content>
